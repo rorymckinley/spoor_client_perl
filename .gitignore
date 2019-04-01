@@ -1,8 +1,9 @@
 !Build/
 .last_cover_stats
-/META.yml
-/META.json
-/MYMETA.*
+App-Spoor/App-Spoor*
+App-Spoor/META.yml
+App-Spoor/META.json
+App-Spoor/MYMETA.*
 *.o
 *.pm.tdy
 *.bs
@@ -25,11 +26,13 @@ Build.bat
 inc/
 
 # ExtUtils::MakeMaker
-/blib/
+App-Spoor/blib/
 /_eumm/
 /*.gz
-/Makefile
-/Makefile.old
-/MANIFEST.bak
+App-Spoor/Makefile
+App-Spoor/Makefile.old
+App-Spoor/MANIFEST
+App-Spoor/MANIFEST.bak
+App-Spoor/*.tar.gz
 /pm_to_blib
 /*.zip
