@@ -41,6 +41,16 @@ UNINSTALLING
   systemctl disable spoor-transmitter.service
   cpanm --uninstall App::Spoor # Assuming you are using cpanminus
 
+  # Optionally, you can choose to remove the following, if you are confident that you no longer need them
+
+  rm -fr /etc/spoor
+  rm -fr /var/lib/spoor
+  rm /etc/systemd/system/spoor-login-follower.service
+  rm /etc/systemd/system/spoor-access-follower.service
+  rm /etc/systemd/system/spoor-error-follower.service
+  rm /etc/systemd/system/spoor-transmitter.service
+  rm /var/cpanel/perl5/lib/SpoorForwardHook.pm
+
 SUPPORT AND DOCUMENTATION
 
 After installing, you can find documentation for this module with the
