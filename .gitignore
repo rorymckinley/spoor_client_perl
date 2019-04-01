@@ -3,7 +3,7 @@
 App-Spoor/App-Spoor*
 App-Spoor/META.yml
 App-Spoor/META.json
-/MYMETA.*
+App-Spoor/MYMETA.*
 *.o
 *.pm.tdy
 *.bs
