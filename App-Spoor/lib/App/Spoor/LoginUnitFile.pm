@@ -8,15 +8,6 @@ use warnings;
 
 App::Spoor::LoginUnitFile
 
-=head1 VERSION
-
-Version 0.01
-
-=cut
-
-our $VERSION = '0.01';
-
-
 =head1 SYNOPSIS
 
 This package exists purely as a means of delivering the contents of the systemd unit file for the service that tails the

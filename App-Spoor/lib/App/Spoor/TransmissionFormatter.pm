@@ -8,15 +8,6 @@ use warnings;
 
 App::Spoor::TransmissionFormatter
 
-=head1 VERSION
-
-Version 0.01
-
-=cut
-
-our $VERSION = '0.01';
-
-
 =head1 SYNOPSIS
 
 Transforms the format of an item so that it is suitable for submission to the Spoor API.

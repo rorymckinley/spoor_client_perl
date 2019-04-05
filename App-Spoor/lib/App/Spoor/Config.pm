@@ -11,14 +11,6 @@ use Path::Tiny qw(path);
 
 App::Spoor::Config
 
-=head1 VERSION
-
-Version 0.01
-
-=cut
-
-our $VERSION = '0.01';
-
 =head1 SYNOPSIS
 
 Allows access to the spoor config file located at /etc/spoor/spoor.yml which currently has the following format;

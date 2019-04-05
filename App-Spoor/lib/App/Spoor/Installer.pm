@@ -16,14 +16,6 @@ use App::Spoor::CpanelHookFile;
 
 App::Spoor::Installer
 
-=head1 VERSION
-
-Version 0.01
-
-=cut
-
-our $VERSION = '0.01';
-
 =head1 SYNOPSIS
 
 Creates directories, config file, systemd unit files as well as the package that will be added to forward-related hooks in CPanel.
