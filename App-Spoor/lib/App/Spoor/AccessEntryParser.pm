@@ -49,6 +49,16 @@ The hash representation contains the following elements when the entry could be 
 
 =back
 
+If the entry could not be successfully parsed, it will contain the following items:
+
+=over 2
+
+=item * type: This is hardcoded to 'access'
+
+=item * event: This is hardcoded to 'unrecognised'.
+
+=back
+
 =cut
 
 sub parse {
