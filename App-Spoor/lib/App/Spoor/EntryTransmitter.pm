@@ -6,10 +6,17 @@ use warnings;
 use JSON;
 
 use MIME::Base64 qw(encode_base64);
-
 =head1 NAME
 
 App::Spoor::EntryTransmitter
+
+=head1 VERSION
+
+Version 0.01
+
+=cut
+
+our $VERSION = '0.01';
 
 =head1 SYNOPSIS
 

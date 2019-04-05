@@ -12,6 +12,14 @@ use File::Touch;
 
 App::Spoor::ParsedEntryWriter
 
+=head1 VERSION
+
+Version 0.01
+
+=cut
+
+our $VERSION = '0.01';
+
 =head1 SYNOPSIS
 
 Writes a parsed log entry as json to a file in /var/lib/spoor/parsed.
