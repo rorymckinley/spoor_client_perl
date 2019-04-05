@@ -8,6 +8,14 @@ use warnings;
 
 App::Spoor::Security
 
+=head1 VERSION
+
+Version 0.01
+
+=cut
+
+our $VERSION = '0.01';
+
 =head1 SYNOPSIS
 
 Performs rudimentary permission and ownership checks of Spoor-related files and directories
