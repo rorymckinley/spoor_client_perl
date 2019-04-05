@@ -8,15 +8,6 @@ use warnings;
 
 App::Spoor::CpanelHookFile
 
-=head1 VERSION
-
-Version 0.01
-
-=cut
-
-our $VERSION = '0.01';
-
-
 =head1 SYNOPSIS
 
 Contains the contents used for populating the file that makes use of the CPanel standarized hook.

@@ -13,15 +13,6 @@ use JSON;
 
 App::Spoor::ParsedFileManager
 
-=head1 VERSION
-
-Version 0.01
-
-=cut
-
-our $VERSION = '0.01';
-
-
 =head1 SYNOPSIS
 
 This module is responsible for looping through the contents of the parsed files directory and passing them to the
