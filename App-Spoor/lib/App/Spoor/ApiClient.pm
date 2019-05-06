@@ -9,7 +9,7 @@ use MIME::Base64 qw(encode_base64);
 
 =head1 NAME
 
-App::Spoor::ApiClient - The great new App::Spoor::ApiClient!
+App::Spoor::ApiClient
 
 =head1 VERSION
 
@@ -19,26 +19,43 @@ Version 0.07
 
 our $VERSION = '0.07';
 
-
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
+Interacts with the Spoor API. see the individual subroutines for more detail.
 
-Perhaps a little code snippet.
+  use Sys::Hostname;
+  use App::Spoor::ApiClient;
 
-    use App::Spoor::ApiClient;
-
-    my $foo = App::Spoor::ApiClient->new();
+  my %data = (
     ...
+  );
+  my $user_agent = LWP::UserAgent->new;
 
-=head1 EXPORT
+  my $transmission_config = App::Spoor::Config::get_transmission_config();
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
+  App::Spoor::ApiClient::most_recent_reports(hostname, $user_agent, $transmission_config);
+  App::Spoor::ApiClient::most_recent_mailbox_events(hostname, $user_agent, $transmission_config);
 
 =head1 SUBROUTINES/METHODS
 
 =head2 most_recent_reports
+
+Fetches the most recent reports from the SpoorAPI. When the SpoorAPI receives data, it creates a report instance. This
+report instance is then parsed and, if all is in order, a mailbox event is created.
+
+This subroutine returns a reference to an array of hashes representing the individual report instances.
+
+  use Sys::Hostname;
+  use App::Spoor::ApiClient;
+
+  my %data = (
+    ...
+  );
+  my $user_agent = LWP::UserAgent->new;
+
+  my $transmission_config = App::Spoor::Config::get_transmission_config();
+
+  App::Spoor::ApiClient::most_recent_reports(hostname, $user_agent, $transmission_config);
 
 =cut
 
@@ -62,11 +79,44 @@ sub most_recent_reports {
   from_json($response->content)->{reports};
 }
 
-=head2 function2
+=head2 most_recent_mailbox_events
+
+Fetches the most recent mailbox events from the SpoorAPI. 
+
+Thsi subroutine returns a reference to an array of hashes representing individual mailbox events.
+
+  use Sys::Hostname;
+  use App::Spoor::ApiClient;
+
+  my %data = (
+    ...
+  );
+  my $user_agent = LWP::UserAgent->new;
+
+  my $transmission_config = App::Spoor::Config::get_transmission_config();
+
+  App::Spoor::ApiClient::most_recent_mailbox_events(hostname, $user_agent, $transmission_config);
 
 =cut
 
-sub function2 {
+sub most_recent_mailbox_events {
+  my $host = shift;
+  my $user_agent = shift;
+  my $config = shift;
+
+  my $uri = $config->{host} . '/api/mailbox_events?' . http_build_query({mailbox_events => {host => $host}});
+
+  my $credentials = 'Basic ' . encode_base64(
+    $config->{credentials}{api_identifier} . ':' . $config->{credentials}{api_secret}
+  );
+
+  my $response = $user_agent->get(
+    $uri,
+    'Authorization' => $credentials,
+    'HTTP-Accept' => 'application/json'
+  );
+
+  from_json($response->content)->{mailbox_events};
 }
 
 =head1 AUTHOR
@@ -78,8 +128,6 @@ Rory McKinley, C<< <rorymckinley at capefox.co> >>
 Please report any bugs or feature requests to C<bug-. at rt.cpan.org>, or through
 the web interface at L<https://rt.cpan.org/NoAuth/ReportBug.html?Queue=.>.  I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
-
-
 
 
 =head1 SUPPORT
@@ -110,10 +158,6 @@ L<https://cpanratings.perl.org/d/.>
 L<https://metacpan.org/release/.>
 
 =back
-
-
-=head1 ACKNOWLEDGEMENTS
-
 
 =head1 LICENSE AND COPYRIGHT
 

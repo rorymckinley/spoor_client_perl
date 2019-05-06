@@ -82,6 +82,15 @@ The transmitter service monitors /var/lib/spoor/parsed for any changes and sends
 recives a response of HTTP 202, the JSON file is moved to /var/lib/spoor/transmitted, otherwise it remains in /var/lib/spoor/parsed and
 the transmitter will keep on retrying, pretty much until the end of time.
 
+=head2 Reporting
+
+Spoor provides rudimentary reporting functionality that can be accessed from the commandline. This functionality 
+distinguished between reports (a report is created by the Spoor API when data is received) and mailbox events ( a
+mailbox event is created once the report has been parsed).
+
+    spoor_report_list #List the most recent reports for the current host
+    spoor_mailbox_event_list #List the most recent mailbox events for the current host
+
 =head2 Uninstalling
 
 To uninstall,do the following (the below assumes that you are using cpanminus):

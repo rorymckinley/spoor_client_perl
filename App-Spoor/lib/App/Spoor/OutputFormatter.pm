@@ -9,7 +9,7 @@ use Date::Format;
 
 =head1 NAME
 
-App::Spoor::OutputFormatter - The great new App::Spoor::OutputFormatter!
+App::Spoor::OutputFormatter
 
 =head1 VERSION
 
@@ -22,6 +22,8 @@ our $VERSION = '0.07';
 
 =head1 SYNOPSIS
 
+This module is used to convert structured data into a formagt suitable for staorage in a file or display on the terminal.
+
 Quick summary of what the module does.
 
 Perhaps a little code snippet.
@@ -31,19 +33,50 @@ Perhaps a little code snippet.
     my $foo = App::Spoor::OutputFormatter->new();
     ...
 
-=head1 EXPORT
-
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
-
 =head1 SUBROUTINES/METHODS
 
 =head2 print
 
+Returns a CSV representation of an array of report representations or mailbox event representations. It can optionally 
+write this output to a file - if no filehandle is provided, output defaults to STDOUT.
+
+  use App::Spoor::Formatter;
+
+  # Write reports as csv to STDOUT
+  @reports_data = (
+    { ... },
+    { ... },
+  );
+
+  App::Spoor::Formatter::print('report', \@reports_data);
+
+  # Write mailbox events as csv to STDOUT
+  @mailbox_events_data = (
+    { ... },
+    { ... },
+  );
+
+  App::Spoor::Formatter::print('mailbox_event', \@mailbox_events_data);
+
+  # Write to a file instead
+  open my $fh, '>', '/tmp/out.csv'
+
+  App::Spoor::Formatter::print('mailbox_event', \@mailbox_events_data, $fh);
+
+  close $fh
 =cut
 
 sub print {
   my $output_type = shift;
+
+  if ($output_type eq 'report') {
+    __print_reports(@_);
+  } elsif ($output_type eq 'mailbox_event') {
+    __print_mailbox_events(@_);
+  }
+}
+
+sub __print_reports {
   my $records = shift;
   my $output_handle = shift // *STDOUT;
   my @transformed_record;
@@ -64,11 +97,26 @@ sub print {
   }
 }
 
-=head2 function2
+sub __print_mailbox_events {
+  my $records = shift;
+  my $output_handle = shift // *STDOUT;
+  my @transformed_record;
+  my @headers = ('id', 'event time', 'host', 'event type', 'mailbox address', 'ip');
+  my $csv = Text::CSV->new({ eol => $/ });
 
-=cut
+  $csv->print($output_handle, \@headers);
+  foreach my $record_hash (@{$records}) {
+    @transformed_record = (
+      $record_hash->{id},
+      time2str('%Y-%m-%d %H:%M:%S %z', $record_hash->{event_time}, 'UTC'),
+      $record_hash->{host},
+      $record_hash->{type},
+      $record_hash->{mailbox_address},
+      $record_hash->{ip}
+    );
 
-sub function2 {
+    $csv->print($output_handle, \@transformed_record);
+  }
 }
 
 =head1 AUTHOR
@@ -112,10 +160,6 @@ L<https://cpanratings.perl.org/d/.>
 L<https://metacpan.org/release/.>
 
 =back
-
-
-=head1 ACKNOWLEDGEMENTS
-
 
 =head1 LICENSE AND COPYRIGHT
 
